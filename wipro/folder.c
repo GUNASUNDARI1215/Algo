@@ -20,7 +20,7 @@ Sample Input 2:
 	numPackets=5
 	packetId= 43 236 11 482 10
 	
-	ouput: 4 8 2 14 0
+	ouput: 4 8 0 14 0
 	
 */
 
