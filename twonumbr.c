@@ -1,21 +1,34 @@
 /*
-write a function that takes in a non-empty array of distinct  integers and an integer representing a target sum.
-If any two numbers in the input array sum up to the target sum, the function should return them in an array,
-in any order. If no two numbers sum up to the target sum, the function should return an empty array.
+------------------TWO SUM------------------
 
-Note that the target sum has to be obtained by summing two different integers in the array, you can't add a single 
-integer to itself in order to obtains the target sum.
+Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
 
-You can assume that there will be at most one pair of numbers summing up to the target sum.
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
 
-Sample Input:
-	array=[3,5,-4,8,11,1,-1,6]
-	targetSum=10
-Sample Output:
-	[-1,11] //The numbers could be in reverse order
+You can return the answer in any order.
+
+ 
+
+Example 1:
+
+Input: nums = [2,7,11,15], target = 9
+Output: [0,1]
+Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
+
+Example 2:
+
+Input: nums = [3,2,4], target = 6
+Output: [1,2]
+
+Example 3:
+
+Input: nums = [3,3], target = 6
+Output: [0,1]
 */
 
 #include<stdio.h>
+
+int result[2]={0};
 
 int partition(int *A, int start, int end)
 {
@@ -52,9 +65,19 @@ void Quicksort(int *A,int start, int end)
 
 int twonumbersum(int Arr[],int size,int targetSum)
 {
-	int left=0,i;
+	
+	int arr1[size],i;
+	for(i=0;i<size;i++)
+	{
+		arr1[i]=Arr[i];
+	}
+	
+	//Sort the array using Quicksort
+	Quicksort(Arr,0,size-1);
+	
+	int left=0;
 	int right=size-1;
-	int result[2]={0};
+
 	
     while(left!=right)
 	{
@@ -63,11 +86,12 @@ int twonumbersum(int Arr[],int size,int targetSum)
 		{
 			result[0]=Arr[left];
 			result[1]=Arr[right];
+			printf("The target sum is obtained from ");
 			for(i=0;i<2;i++)
 			{
 				printf("[%d]",result[i]);
 			}
-			printf("\nThe target sum is obtained at the index: %d,%d",left,right);
+		
 			return ;
 		}
 			
@@ -81,12 +105,10 @@ int twonumbersum(int Arr[],int size,int targetSum)
 			right--;
 		}
 	}
-	
-	for(i=0;i<2;i++)
-	{
-		printf("[%d]",result[i]);
-	}
 
+	printf("The target is not found");
+	exit(0);
+	
 }
 
 int main()
@@ -103,16 +125,31 @@ int main()
 		scanf("%d",&arr[i]);
 	}
 	
+	int original_arr[size];
+	for(i=0;i<size;i++)
+	{
+		original_arr[i]=arr[i];
+	}	
+	
 	int targetSum=0;
 	printf("Enter the target Sum : ");
 	scanf("%d",&targetSum);
 	
-	//Sort the array using Quicksort
-	Quicksort(arr,0,size-1);
-	
-	printf("The targetSum is obtained by: ");
 	twonumbersum(arr,size,targetSum);
- 
 	
+	int index1,index2;	
+	for(i=0;i<size;i++)
+	{
+		if(original_arr[i]==result[0])
+		{
+			index1=i;
+			i++;
+		}
+			
+		if(original_arr[i]==result[1])
+			index2=i;
+	}
+	printf("\nThe target sum is obtained at the index: %d,%d",index1,index2);
+		
 	return 0;
 }
